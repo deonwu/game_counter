@@ -1,15 +1,7 @@
 import React from "react";
 import {BrowserRouter, Route, Switch, Redirect} from "dva/router";
 
-class AntFinReportEntry extends React.Component {
-  render () {
-    const match = this.props.match;
-    
-    return (
-      <div>home </div>
-    )
-  }
-}
+import MainFrame from "./routes/MainFrame";
 
 function RouterConfig({ history }) {
   return (
@@ -17,7 +9,7 @@ function RouterConfig({ history }) {
       <BrowserRouter>
         <Switch>
   
-          <Route component={AntFinReportEntry} path="/counter" />
+          <Route component={MainFrame} path="/counter" />
           
           <Redirect to="/counter" path="*" />
         </Switch>
