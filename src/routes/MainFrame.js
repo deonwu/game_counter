@@ -1,13 +1,21 @@
 
 import React from "react";
-import { Flex, WhiteSpace } from 'antd-mobile';
-import { Button, List } from 'antd-mobile';
+import { connect } from 'dva';
+
+import { Flex, WhiteSpace, Tabs } from 'antd-mobile';
+import { Button, List, Badge } from 'antd-mobile';
+
+import MemberItem from "./MemberItem";
+import ActivityItem from "./ActivityItem";
 
 const Item = List.Item;
 
 class MainFrame extends React.Component {
   render () {
-    const match = this.props.match;
+    const {book, member_list} = this.props;
+    
+    const tabs2 = [{ title: <Badge text={'3'}>活动成员</Badge> },
+      { title: <Badge text={'3'}>资金记录</Badge> }];
     
     return (
       <div className="flex-container">
@@ -26,18 +34,40 @@ class MainFrame extends React.Component {
             <Button type="primary" inline size="small" >增加成员</Button>
           </Flex.Item>
         </Flex>
+        <WhiteSpace size="lg" />
+  
   
         <Flex justify="center" align="center">
-          <Flex.Item align="center">
-            <List renderHeader={() => '活动成员列表'} className="my-list">
-              <Item extra={'extra content'}>Title</Item>
-              <Item extra={'extra content'}>Title</Item>
-    
-              <Item extra={'extra content'}>Title</Item>
-              <Item extra={'extra content'}>Title</Item>
-  
-            </List>
+          <Flex.Item>
+            总本金: <b>{book.total}</b>
           </Flex.Item>
+          <Flex.Item>
+            收: <b>{book.win}</b>
+          </Flex.Item>
+          <Flex.Item>
+            付: <b>{book.loss}</b>
+          </Flex.Item>
+        </Flex>
+  
+        <WhiteSpace size="lg" />
+  
+        <Flex justify="center" align="center">
+          <Tabs tabs={tabs2}
+                initialPage={1}
+                renderTab={tab => <span>{tab.title}</span>}
+          >
+            <Flex.Item align="center">
+              <List className="my-list">
+                { member_list.map(x=><MemberItem item={x} />) }
+              </List>
+            </Flex.Item>
+            <Flex.Item align="center">
+              <List className="my-list">
+                { member_list.map(x=><ActivityItem item={x} />) }
+              </List>
+            </Flex.Item>
+          </Tabs>
+          
         </Flex>
         
       </div>
@@ -45,4 +75,12 @@ class MainFrame extends React.Component {
   }
 };
 
-export default MainFrame;
+function mapStateToProps(state) {
+  const { book, member_list } = state.game;
+  return {
+    book,
+    member_list
+  };
+}
+
+export default connect(mapStateToProps)(MainFrame);

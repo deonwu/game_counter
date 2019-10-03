@@ -3,7 +3,15 @@ export default {
 
   namespace: 'game',
 
-  state: {},
+  state: {
+    book: {total: 0,
+      win: 10000,
+      loss: -10000
+    },
+    member_list:[1,2,3,4],
+    
+    action_list:[1,2,3,4]
+  },
 
   subscriptions: {
     setup({ dispatch, history }) {  // eslint-disable-line
