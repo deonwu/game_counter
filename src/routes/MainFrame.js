@@ -2,7 +2,7 @@
 import React from "react";
 import { connect } from 'dva';
 
-import { Flex, WhiteSpace, Tabs } from 'antd-mobile';
+import { Flex, WhiteSpace, Tabs, ActionSheet, Modal, InputItem } from 'antd-mobile';
 import { Button, List, Badge } from 'antd-mobile';
 
 import MemberItem from "./MemberItem";
@@ -10,13 +10,50 @@ import ActivityItem from "./ActivityItem";
 import '../index.css';
 
 const Item = List.Item;
+const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+let moneyKeyboardWrapProps;
+if (isIPhone) {
+  moneyKeyboardWrapProps = {
+    onTouchStart: e => e.preventDefault(),
+  };
+}
 
 class MainFrame extends React.Component {
+  
+  state = {visibleNew: false};
+  
+  onClose(){
+    if(this.state.visibleNew) {
+      this.setState({visibleNew: false});
+    }
+  }
+  
+  showModal(name){
+    this.setState({visibleNew: name === 'New'});
+  }
+  
   render () {
     const {book, member_list} = this.props;
     
     const tabs2 = [{ title: <Badge text={'3'}>活动成员</Badge> },
       { title: <Badge text={'3'}>资金记录</Badge> }];
+  
+  
+    const showActionSheet = () => {
+      const BUTTONS = ['清空记录', '取消'];
+      ActionSheet.showActionSheetWithOptions({
+          options: BUTTONS,
+          cancelButtonIndex: BUTTONS.length - 1,
+          destructiveButtonIndex: BUTTONS.length - 2,
+          // title: 'title',
+          message: '确认清空活动资金记录？',
+          maskClosable: true,
+          'data-seed': 'logId',
+        },
+        (buttonIndex) => {
+          this.setState({ clicked: BUTTONS[buttonIndex] });
+        });
+    };
     
     return (
       <div className="flex-container">
@@ -29,10 +66,10 @@ class MainFrame extends React.Component {
   
         <Flex justify="center" align="center">
           <Flex.Item align="center">
-            <Button type="primary" inline size="small" >清除 / C</Button>
+            <Button type="primary" inline size="small" onClick={showActionSheet} >清除 / C</Button>
           </Flex.Item>
           <Flex.Item align="center">
-            <Button type="primary" inline size="small" >增加成员</Button>
+            <Button type="primary" inline size="small" onClick={x=>this.showModal('New')}>增加成员</Button>
           </Flex.Item>
         </Flex>
         <WhiteSpace size="lg" />
@@ -88,7 +125,38 @@ class MainFrame extends React.Component {
           </Tabs>
           
         </Flex>
-        
+  
+        <Modal
+          popup
+          visible={this.state.visibleNew}
+          onClose={x=>this.onClose()}
+          animationType="slide-up"
+        >
+          <List renderHeader={() => <div>增加活动成员</div>} className="popup-list">
+            <List.Item>
+              <InputItem
+                type={"text"}
+                defaultValue=""
+                placeholder="成员名称"
+                moneyKeyboardAlign="left"
+                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+              >成员名称</InputItem>
+            </List.Item>
+            
+            <List.Item>
+              <InputItem
+                type={"number"}
+                defaultValue={100}
+                placeholder="初始金额"
+                moneyKeyboardAlign="left"
+                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+              >活动金额</InputItem>
+            </List.Item>
+            <List.Item>
+              <Button type="primary" onClick={x=>this.onClose('modal2')}>确认</Button>
+            </List.Item>
+          </List>
+        </Modal>
       </div>
     )
   }
