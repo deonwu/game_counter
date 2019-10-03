@@ -7,6 +7,7 @@ import { Button, List, Badge } from 'antd-mobile';
 
 import MemberItem from "./MemberItem";
 import ActivityItem from "./ActivityItem";
+import '../index.css';
 
 const Item = List.Item;
 
@@ -38,13 +39,13 @@ class MainFrame extends React.Component {
   
   
         <Flex justify="center" align="center">
-          <Flex.Item>
+          <Flex.Item align="center">
             总本金: <b>{book.total}</b>
           </Flex.Item>
-          <Flex.Item>
+          <Flex.Item align="center">
             收: <b>{book.win}</b>
           </Flex.Item>
-          <Flex.Item>
+          <Flex.Item align="center">
             付: <b>{book.loss}</b>
           </Flex.Item>
         </Flex>
@@ -53,11 +54,29 @@ class MainFrame extends React.Component {
   
         <Flex justify="center" align="center">
           <Tabs tabs={tabs2}
-                initialPage={1}
+                initialPage={0}
                 renderTab={tab => <span>{tab.title}</span>}
           >
             <Flex.Item align="center">
               <List className="my-list">
+                <WhiteSpace size="sm" />
+  
+                <Flex justify="center" align="center">
+                  <Flex.Item align="center">
+                    名称
+                  </Flex.Item>
+                  <Flex.Item align="center">
+                    本金累计
+                  </Flex.Item>
+                  <Flex.Item align="center">
+                    余额
+                  </Flex.Item>
+                  <Flex.Item align="center">
+                    最终结余
+                  </Flex.Item>
+                </Flex>
+                <WhiteSpace size="sm" />
+  
                 { member_list.map(x=><MemberItem item={x} />) }
               </List>
             </Flex.Item>

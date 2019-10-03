@@ -3,3 +3,7 @@ html, body, :global(#root) {
   height: 100%;
 }
 
+
+.flex-container {
+  margin: 0 15px;
+}
