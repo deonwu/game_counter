@@ -12,7 +12,7 @@ import styles from '../index.less';
 
 class MainFrame extends React.Component {
   
-  state = {visibleNew: false, newUser: '', newMoney: 0};
+  state = {visibleNew: false, newUser: '', newMoney: 0, curFocus:''};
   
   onClose(){
     if(this.state.visibleNew) {
@@ -20,8 +20,12 @@ class MainFrame extends React.Component {
     }
   }
   
+  onFocus(name){
+    this.setState({curFocus: name});
+  }
+  
   showModal(name){
-    this.setState({visibleNew: name === 'New'});
+    this.setState({visibleNew: name === 'New', newUser: ''});
   }
   
   onChangeName(val){
@@ -160,20 +164,18 @@ class MainFrame extends React.Component {
         <Modal
           visible={this.state.visibleNew}
           onClose={x=>this.onClose()}
-          
           closable
         >
           <List renderHeader={() => <div>增加活动成员</div>} >
             <List.Item>
               <InputItem
                 type={"text"}
-                defaultValue={this.state.newUser}
+                defaultValue=""
                 placeholder="成员名称"
                 moneyKeyboardAlign="left"
                 onChange={x=>this.onChangeName(x)}
-                ref={el => {if(this.state.visibleNew && el) {
-                  el.focus();
-                }}}
+                ref={el => {if(this.state.visibleNew && this.state.curFocus === 'name' && el) {el.focus();}}}
+                onFocus={x=>this.onFocus("name")}
               >成员名称</InputItem>
             </List.Item>
             
@@ -184,6 +186,8 @@ class MainFrame extends React.Component {
                 placeholder="初始金额"
                 moneyKeyboardAlign="left"
                 onChange={x=>this.onChangeMoney(x)}
+                ref={el => {if(this.state.visibleNew && this.state.curFocus === 'money' && el) {el.focus();}}}
+                onFocus={x=>this.onFocus("money")}
               >活动金额</InputItem>
             </List.Item>
             <List.Item>
