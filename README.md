@@ -7,3 +7,5 @@
 
 1. http://www.deonwu84.com/gc/
 
+# 应用图片
+![截屏](asset/screen_01.png)
