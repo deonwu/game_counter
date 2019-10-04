@@ -1,0 +1,44 @@
+
+html, body, :global(#root) {
+  height: 100%;
+}
+
+
+.flex-container {
+  margin: 0 15px;
+}
+
+
+.mainTabs{
+
+  .win{
+    color: rgb(207, 19, 34);
+
+    :global {
+      a.am-button {
+        color: rgb(207, 19, 34) !important;
+      }
+    }
+  }
+
+  .loss{
+    color: rgb(63, 134, 0);
+    :global {
+      a.am-button {
+        color: rgb(63, 134, 0) !important;
+      }
+    }
+  }
+
+
+  :global{
+
+    .am-tabs-default-bar, .am-list-body, .am-button{
+      background-color:transparent !important;
+    }
+
+    .am-list-body{
+
+    }
+  }
+}

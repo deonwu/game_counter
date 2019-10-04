@@ -9,7 +9,7 @@ import MemberItem from "./MemberItem";
 import ActivityItem from "./ActivityItem";
 import { format } from "./utils";
 
-import '../index.css';
+import styles from '../index.less';
 
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
 let moneyKeyboardWrapProps;
@@ -79,6 +79,13 @@ class MainFrame extends React.Component {
     };
     
     const defaultMoney = this.state.newMoney || this.props.new_user;
+  
+    let rowStyle = "";
+    if(book.total < book.balance){
+      rowStyle = styles.win;
+    }else if(book.total >  book.balance){
+      rowStyle = styles.loss;
+    }
     
     return (
       <div className="flex-container">
@@ -91,20 +98,20 @@ class MainFrame extends React.Component {
   
         <Flex justify="center" align="center">
           <Flex.Item align="center">
-            <Button type="primary" inline size="small" onClick={showActionSheet} >清除 / C</Button>
+            <Button type="ghost" inline size="small" onClick={showActionSheet} >清除 / C</Button>
           </Flex.Item>
           <Flex.Item align="center">
-            <Button type="primary" inline size="small" onClick={x=>this.showModal('New')}>增加成员</Button>
+            <Button type="ghost" inline size="small" onClick={x=>this.showModal('New')}>增加成员</Button>
           </Flex.Item>
         </Flex>
         <WhiteSpace size="lg" />
   
-        <WingBlank>
+        <WingBlank className={styles.mainTabs}>
           <Flex justify="center" align="center">
             <Flex.Item>
               总本金: <b>{format(book.total)}</b>
             </Flex.Item>
-            <Flex.Item>
+            <Flex.Item className={rowStyle}>
               总余额: <b>{format(book.balance)}</b>
             </Flex.Item>
           </Flex>
@@ -123,7 +130,7 @@ class MainFrame extends React.Component {
           <WhiteSpace size="lg" />
         </WingBlank>
   
-        <Flex justify="center" align="center">
+        <Flex justify="center" align="center" className={styles.mainTabs}>
           <Tabs tabs={tabs2}
                 initialPage={0}
                 renderTab={tab => <span>{tab.title}</span>}
@@ -191,7 +198,7 @@ class MainFrame extends React.Component {
               >活动金额</InputItem>
             </List.Item>
             <List.Item>
-              <Button type="primary" onClick={x=>this.onClickNew()}>确认</Button>
+              <Button type="ghost" onClick={x=>this.onClickNew()}>确认</Button>
             </List.Item>
           </List>
         </Modal>

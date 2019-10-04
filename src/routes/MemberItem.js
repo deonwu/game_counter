@@ -5,6 +5,7 @@ import { connect } from 'dva';
 import { Flex, WhiteSpace, Modal, InputItem } from 'antd-mobile';
 import { Button, List } from 'antd-mobile';
 import { format } from "./utils";
+import styles from '../index.less';
 
 class MemberItem extends React.Component {
   
@@ -48,9 +49,15 @@ class MemberItem extends React.Component {
     
     const {item} = this.props;
     
+    let rowStyle = "";
+    if(item.loss < 0){
+      rowStyle = styles.loss;
+    }else if(item.loss >  0){
+      rowStyle = styles.win;
+    }
     
     return (
-      <div className="flex-container">
+      <div className={rowStyle}>
         <Flex justify="center" align="center">
           <Flex.Item align="center">
             {item.name}
