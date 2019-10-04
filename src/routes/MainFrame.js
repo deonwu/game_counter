@@ -2,7 +2,7 @@
 import React from "react";
 import { connect } from 'dva';
 
-import { Flex, WhiteSpace, Tabs, ActionSheet, Modal, InputItem } from 'antd-mobile';
+import { Flex, WhiteSpace, WingBlank, Tabs, ActionSheet, Modal, InputItem } from 'antd-mobile';
 import { Button, List, Badge } from 'antd-mobile';
 
 import MemberItem from "./MemberItem";
@@ -55,8 +55,8 @@ class MainFrame extends React.Component {
   render () {
     const {book, member_list, action_list} = this.props;
     
-    const tabs2 = [{ title: <Badge text={'3'}>活动成员</Badge> },
-      { title: <Badge text={'3'}>资金记录</Badge> }];
+    const tabs2 = [{ title: <Badge text={member_list.length}>活动成员</Badge> },
+      { title: <Badge text={action_list.length}>资金记录</Badge> }];
   
   
     const showActionSheet = () => {
@@ -94,20 +94,29 @@ class MainFrame extends React.Component {
         </Flex>
         <WhiteSpace size="lg" />
   
-  
-        <Flex justify="center" align="center">
-          <Flex.Item align="center">
-            总本金: <b>{book.total}</b>
-          </Flex.Item>
-          <Flex.Item align="center">
-            余: <b>{book.balance}</b>
-          </Flex.Item>
-          <Flex.Item align="center">
-            差: <b>{book.loss}</b>
-          </Flex.Item>
-        </Flex>
-  
-        <WhiteSpace size="lg" />
+        <WingBlank>
+          <Flex justify="center" align="center">
+            <Flex.Item>
+              总本金: <b>{book.total}</b>
+            </Flex.Item>
+            <Flex.Item>
+              总余额: <b>{book.balance}</b>
+            </Flex.Item>
+          </Flex>
+    
+          <WhiteSpace size="lg" />
+    
+          <Flex justify="center" align="center">
+            <Flex.Item >
+              总应收: <b>{book.income}</b>
+            </Flex.Item>
+            <Flex.Item >
+              总应付: <b>{book.pay}</b>
+            </Flex.Item>
+          </Flex>
+    
+          <WhiteSpace size="lg" />
+        </WingBlank>
   
         <Flex justify="center" align="center">
           <Tabs tabs={tabs2}

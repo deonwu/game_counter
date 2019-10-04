@@ -142,7 +142,7 @@ export default {
           return;
         }
       
-        updateUser[0].balance = updateUser[0].balance + im;
+        updateUser[0].balance = im;
       
         yield put({type: 'userList', member_list: [...curUser]});
         yield put({type: 'updateBook'});
@@ -175,10 +175,12 @@ export default {
       
       const balance = sum(curUser.map(x=>x.balance));
   
-      const loss = sum(curUser.filter(x=>x.loss > 0).map(x=>x.loss));
+      const income = sum(curUser.filter(x=>x.loss > 0).map(x=>x.loss));
+  
+      const pay = sum(curUser.filter(x=>x.loss < 0).map(x=>x.loss));
   
       yield put({type: 'userList', member_list: [...curUser]});
-      yield put({type: 'newBook', book: {total, balance, loss}});
+      yield put({type: 'newBook', book: {total, balance, income, pay}});
     }
     
   },
