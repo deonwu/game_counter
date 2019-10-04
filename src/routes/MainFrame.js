@@ -20,7 +20,7 @@ if (isIPhone) {
 
 class MainFrame extends React.Component {
   
-  state = {visibleNew: false};
+  state = {visibleNew: false, newUser: '', newMoney: '100'};
   
   onClose(){
     if(this.state.visibleNew) {
@@ -32,8 +32,28 @@ class MainFrame extends React.Component {
     this.setState({visibleNew: name === 'New'});
   }
   
+  onChangeName(val){
+    this.setState({newUser: val});
+  }
+  
+  onChangeMoney(val){
+    this.setState({newMoney: val});
+  }
+  
+  onClickNew(){
+    const {dispatch} = this.props;
+    console.log("xxx", this.state.newUser, ",,", this.state.newMoney);
+  
+    dispatch({type: "game/newUser",
+              newName: this.state.newUser,
+              newMoney: this.state.newMoney,
+              cb: ()=>{this.onClose()}
+    });
+  }
+  
+  
   render () {
-    const {book, member_list} = this.props;
+    const {book, member_list, action_list} = this.props;
     
     const tabs2 = [{ title: <Badge text={'3'}>活动成员</Badge> },
       { title: <Badge text={'3'}>资金记录</Badge> }];
@@ -80,10 +100,10 @@ class MainFrame extends React.Component {
             总本金: <b>{book.total}</b>
           </Flex.Item>
           <Flex.Item align="center">
-            收: <b>{book.win}</b>
+            余: <b>{book.win}</b>
           </Flex.Item>
           <Flex.Item align="center">
-            付: <b>{book.loss}</b>
+            差: <b>{book.loss}</b>
           </Flex.Item>
         </Flex>
   
@@ -119,7 +139,9 @@ class MainFrame extends React.Component {
             </Flex.Item>
             <Flex.Item align="center">
               <List className="my-list">
-                { member_list.map(x=><ActivityItem item={x} />) }
+                <WhiteSpace size="sm" />
+  
+                { action_list.map(x=><ActivityItem item={x} />) }
               </List>
             </Flex.Item>
           </Tabs>
@@ -136,24 +158,26 @@ class MainFrame extends React.Component {
             <List.Item>
               <InputItem
                 type={"text"}
-                defaultValue=""
+                defaultValue={this.state.newUser}
                 placeholder="成员名称"
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                onChange={x=>this.onChangeName(x)}
               >成员名称</InputItem>
             </List.Item>
             
             <List.Item>
               <InputItem
                 type={"number"}
-                defaultValue={100}
+                defaultValue={this.state.newMoney}
                 placeholder="初始金额"
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                onChange={x=>this.onChangeMoney(x)}
               >活动金额</InputItem>
             </List.Item>
             <List.Item>
-              <Button type="primary" onClick={x=>this.onClose('modal2')}>确认</Button>
+              <Button type="primary" onClick={x=>this.onClickNew()}>确认</Button>
             </List.Item>
           </List>
         </Modal>
@@ -163,10 +187,11 @@ class MainFrame extends React.Component {
 };
 
 function mapStateToProps(state) {
-  const { book, member_list } = state.game;
+  const { book, member_list, action_list } = state.game;
   return {
     book,
-    member_list
+    member_list,
+    action_list
   };
 }
 

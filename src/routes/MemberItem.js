@@ -30,27 +30,26 @@ class MemberItem extends React.Component {
   
   render () {
     
-    const book = this.props.book;
+    const {item} = this.props;
     
     
     return (
       <div className="flex-container">
         <Flex justify="center" align="center">
           <Flex.Item align="center">
-            长坤
+            {item.name}
           </Flex.Item>
           <Flex.Item align="center">
-            <Button size="small" inline onClick={x=>this.showModal('Total')}>{book.loss}</Button>
+            <Button size="small" inline onClick={x=>this.showModal('Total')}>{item.allMoney}</Button>
           </Flex.Item>
           <Flex.Item align="center">
-            <Button nline size="small" onClick={x=>this.showModal('Balance')}>{book.loss}</Button>
+            <Button nline size="small" onClick={x=>this.showModal('Balance')}>{item.balance}</Button>
           </Flex.Item>
           <Flex.Item align="center">
-           <b>{book.loss}</b>
+           <b>{item.loss}</b>
           </Flex.Item>
         </Flex>
         <WhiteSpace size="sm" />
-  
   
         <Modal
           popup
