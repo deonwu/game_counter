@@ -20,7 +20,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {  // eslint-disable-line
       return history.listen(({ pathname, query }) => {
-        console.log(",,,l:", pathname);
+        //console.log(",,,l:", pathname);
         if (pathname === '/counter' || pathname === '/') {
           dispatch({ type: 'init', payload: query });
         }
@@ -83,7 +83,8 @@ export default {
           yield put({type: 'userList', member_list: [...curUser, {name: newName, allMoney: im, balance: im, loss: 0}]});
   
           const actionList = yield select(state => state.game.action_list);
-          yield put({type: 'opList', action_list: [...actionList, {name: newName, allMoney: im, time: new Date()}]});
+          yield put({type: 'opList', action_list: [...actionList, {key:newName + "_" + actionList.length,
+              name: newName, allMoney: im, time: new Date()}]});
   
           yield put({type: 'updateBook'});
           cb && cb();
@@ -115,7 +116,8 @@ export default {
         yield put({type: 'userList', member_list: [...curUser]});
   
         const actionList = yield select(state => state.game.action_list);
-        yield put({type: 'opList', action_list: [...actionList, {name: newName, allMoney: im, time: new Date()}]});
+        yield put({type: 'opList', action_list: [...actionList, {key:newName + "_" + actionList.length,
+            name: newName, allMoney: im, time: new Date()}]});
   
         yield put({type: 'updateBook'});
   

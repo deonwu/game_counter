@@ -9,7 +9,6 @@ import MemberItem from "./MemberItem";
 import ActivityItem from "./ActivityItem";
 import '../index.css';
 
-const Item = List.Item;
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
 let moneyKeyboardWrapProps;
 if (isIPhone) {
@@ -145,14 +144,14 @@ class MainFrame extends React.Component {
                 </Flex>
                 <WhiteSpace size="sm" />
   
-                { member_list.map(x=><MemberItem item={x} />) }
+                { member_list.map(x=><MemberItem key={x.name} item={x} />) }
               </List>
             </Flex.Item>
             <Flex.Item align="center">
               <List className="my-list">
                 <WhiteSpace size="sm" />
   
-                { action_list.map(x=><ActivityItem item={x} />) }
+                { action_list.map(x=><ActivityItem key={x.key} item={x} />) }
               </List>
             </Flex.Item>
           </Tabs>

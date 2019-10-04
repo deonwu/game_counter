@@ -9,9 +9,8 @@ function RouterConfig({ history }) {
       <BrowserRouter>
         <Switch>
   
-          <Route component={MainFrame} path="/counter" />
+          <Route component={MainFrame} path="/" />
           
-          <Redirect to="/counter" path="*" />
         </Switch>
       </BrowserRouter>
     </div>
