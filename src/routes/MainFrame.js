@@ -163,12 +163,12 @@ class MainFrame extends React.Component {
         </Flex>
   
         <Modal
-          popup
           visible={this.state.visibleNew}
           onClose={x=>this.onClose()}
-          animationType="slide-up"
+          
+          closable
         >
-          <List renderHeader={() => <div>增加活动成员</div>} className="popup-list">
+          <List renderHeader={() => <div>增加活动成员</div>} >
             <List.Item>
               <InputItem
                 type={"text"}
