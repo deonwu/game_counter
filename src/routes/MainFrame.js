@@ -98,7 +98,7 @@ class MainFrame extends React.Component {
   
         <Flex justify="center" align="center">
           <Flex.Item align="center">
-            <Button type="ghost" inline size="small" onClick={showActionSheet} >清除 / C</Button>
+            <Button type="ghost" inline size="small" onClick={showActionSheet} >清除活动</Button>
           </Flex.Item>
           <Flex.Item align="center">
             <Button type="ghost" inline size="small" onClick={x=>this.showModal('New')}>增加成员</Button>
