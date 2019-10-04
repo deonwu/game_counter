@@ -53,7 +53,7 @@ class MainFrame extends React.Component {
   
   
   render () {
-    const {book, member_list, action_list} = this.props;
+    const {book, member_list, action_list, dispatch} = this.props;
     
     const tabs2 = [{ title: <Badge text={member_list.length}>活动成员</Badge> },
       { title: <Badge text={action_list.length}>资金记录</Badge> }];
@@ -71,7 +71,9 @@ class MainFrame extends React.Component {
           'data-seed': 'logId',
         },
         (buttonIndex) => {
-          this.setState({ clicked: BUTTONS[buttonIndex] });
+          if(buttonIndex == 0){
+            dispatch({type: "game/clear"});
+          }
         });
     };
     

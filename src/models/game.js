@@ -153,7 +153,12 @@ export default {
       }
     },
   
+    *clear({ }, { put }) {  // eslint-disable-line
   
+      yield put({type: 'userList', member_list: []});
+      yield put({type: 'opList', action_list: []});
+      yield put({type: 'updateBook'});
+    },
     
   
     *updateBook({ newName, newMoney, cb }, { call, put, select }) {  // eslint-disable-line
