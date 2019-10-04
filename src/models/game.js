@@ -13,8 +13,10 @@ export default {
     },
     
     member_list:[],
-    
     action_list:[],
+    
+    last_total: 1000,
+    new_user: 2000
   },
 
   subscriptions: {
@@ -56,6 +58,13 @@ export default {
           yield put({type: 'opList', action_list: acList, ignoreStore: true});
         }
       }
+      
+      if(store("last_total")){
+        yield put({type: 'lastTotal', last_total: store("last_total")});
+      }
+      if(store("new_user")){
+        yield put({type: 'newUserMoney', new_user: store("new_user")});
+      }
   
       yield put({type: 'updateBook'});
     },
@@ -87,6 +96,9 @@ export default {
               name: newName, allMoney: im, time: new Date()}]});
   
           yield put({type: 'updateBook'});
+  
+          yield put({type: 'newUserMoney', new_user: newMoney});
+  
           cb && cb();
         }
       }else {
@@ -128,6 +140,8 @@ export default {
   
         yield put({type: 'updateBook'});
   
+        yield put({type: 'lastTotal', last_total: newMoney});
+        
         cb && cb();
       }else {
         Toast.fail("成员名字长度1~6字符!");
@@ -217,6 +231,22 @@ export default {
   
     newBook(state, action) {
       return { ...state, book: action.book };
+    },
+  
+    newUserMoney(state, action) {
+      if(store("new_user") != action.new_user) {
+        store("new_user", action.new_user);
+      }
+  
+      return { ...state, new_user: action.new_user };
+    },
+  
+    lastTotal(state, action) {
+      if(store("last_total") != action.last_total) {
+        store("last_total", action.last_total);
+      }
+      
+      return { ...state, last_total: action.last_total };
     },
   
   },

@@ -9,7 +9,7 @@ import { format } from "./utils";
 class MemberItem extends React.Component {
   
   onUpdateMoney(){
-    const {dispatch, item} = this.props;
+    const {dispatch, item, last_total} = this.props;
   
     const title = `${item.name} - 增加活动金额`;
     Modal.prompt(title, '', [
@@ -23,7 +23,7 @@ class MemberItem extends React.Component {
       
       }
       },
-    ], 'default', '100')
+    ], 'default', last_total || "100")
   }
   
   onUpdateBalance(){
@@ -73,9 +73,10 @@ class MemberItem extends React.Component {
 };
 
 function mapStateToProps(state) {
-  const { book } = state.game;
+  const { book, last_total } = state.game;
   return {
     book,
+    last_total
   };
 }
 

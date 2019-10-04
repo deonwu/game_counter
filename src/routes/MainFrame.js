@@ -21,7 +21,7 @@ if (isIPhone) {
 
 class MainFrame extends React.Component {
   
-  state = {visibleNew: false, newUser: '', newMoney: '100'};
+  state = {visibleNew: false, newUser: '', newMoney: 0};
   
   onClose(){
     if(this.state.visibleNew) {
@@ -43,11 +43,11 @@ class MainFrame extends React.Component {
   
   onClickNew(){
     const {dispatch} = this.props;
-    //console.log("xxx", this.state.newUser, ",,", this.state.newMoney);
+    const defaultMoney = this.state.newMoney || this.props.new_user;
   
     dispatch({type: "game/newUser",
               newName: this.state.newUser,
-              newMoney: this.state.newMoney,
+              newMoney: defaultMoney,
               cb: ()=>{this.onClose()}
     });
   }
@@ -77,6 +77,8 @@ class MainFrame extends React.Component {
           }
         });
     };
+    
+    const defaultMoney = this.state.newMoney || this.props.new_user;
     
     return (
       <div className="flex-container">
@@ -181,7 +183,7 @@ class MainFrame extends React.Component {
             <List.Item>
               <InputItem
                 type={"number"}
-                defaultValue={this.state.newMoney}
+                defaultValue={defaultMoney}
                 placeholder="初始金额"
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
@@ -199,11 +201,12 @@ class MainFrame extends React.Component {
 };
 
 function mapStateToProps(state) {
-  const { book, member_list, action_list } = state.game;
+  const { book, member_list, action_list, new_user } = state.game;
   return {
     book,
     member_list,
-    action_list
+    action_list,
+    new_user
   };
 }
 
