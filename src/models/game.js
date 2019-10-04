@@ -8,7 +8,7 @@ export default {
   state: {
     book: {
       total: 0,
-      win: 10000,
+      balance: 10000,
       loss: -10000
     },
     
@@ -56,6 +56,8 @@ export default {
           yield put({type: 'opList', action_list: acList, ignoreStore: true});
         }
       }
+  
+      yield put({type: 'updateBook'});
     },
   
     *newUser({ newName, newMoney, cb }, { call, put, select }) {  // eslint-disable-line
@@ -82,13 +84,103 @@ export default {
   
           const actionList = yield select(state => state.game.action_list);
           yield put({type: 'opList', action_list: [...actionList, {name: newName, allMoney: im, time: new Date()}]});
-          
+  
+          yield put({type: 'updateBook'});
           cb && cb();
         }
       }else {
         Toast.fail("成员名字长度1~6字符!");
       }
     },
+  
+    *newMoney({ newName, newMoney, cb }, { call, put, select }) {  // eslint-disable-line
+    
+      if(newName && newMoney) {
+        const curUser = yield select(state => state.game.member_list);
+        const name = newName.trim();
+  
+        const updateUser = curUser.filter(x=>x.name === name);
+        if(updateUser.length <= 0){
+          Toast.fail("未知成员名:" + newName);
+        }
+        const im = parseInt(newMoney);
+        if(im <= 0 || im > 10000000){
+          Toast.fail("金额只能0~10,000,000");
+        
+          return;
+        }
+  
+        updateUser[0].allMoney = updateUser[0].allMoney + im;
+  
+        yield put({type: 'userList', member_list: [...curUser]});
+  
+        const actionList = yield select(state => state.game.action_list);
+        yield put({type: 'opList', action_list: [...actionList, {name: newName, allMoney: im, time: new Date()}]});
+  
+        yield put({type: 'updateBook'});
+  
+        cb && cb();
+      }else {
+        Toast.fail("成员名字长度1~6字符!");
+      }
+    },
+  
+    *newBalance({ newName, newMoney, cb }, { put, select }) {  // eslint-disable-line
+    
+      if(newName && newMoney) {
+        const curUser = yield select(state => state.game.member_list);
+        const name = newName.trim();
+      
+        const updateUser = curUser.filter(x=>x.name === name);
+        if(updateUser.length <= 0){
+          Toast.fail("未知成员名:" + newName);
+        }
+        const im = parseInt(newMoney);
+        if(im <= 0 || im > 10000000){
+          Toast.fail("金额只能0~10,000,000");
+        
+          return;
+        }
+      
+        updateUser[0].balance = updateUser[0].balance + im;
+      
+        yield put({type: 'userList', member_list: [...curUser]});
+        yield put({type: 'updateBook'});
+      
+        cb && cb();
+      }else {
+        Toast.fail("成员名字长度1~6字符!");
+      }
+    },
+  
+  
+    
+  
+    *updateBook({ newName, newMoney, cb }, { call, put, select }) {  // eslint-disable-line
+  
+      const curUser = yield select(state => state.game.member_list);
+      
+      curUser.forEach(x=>{
+        x.loss = x.balance - x.allMoney;
+      });
+      
+      const sum = x=>{
+        let c = 0;
+        x.forEach(e=>c = c+ e);
+        
+        return c;
+      };
+
+      const total = sum(curUser.map(x=>x.allMoney));
+      
+      const balance = sum(curUser.map(x=>x.balance));
+  
+      const loss = sum(curUser.filter(x=>x.loss > 0).map(x=>x.loss));
+  
+      yield put({type: 'userList', member_list: [...curUser]});
+      yield put({type: 'newBook', book: {total, balance, loss}});
+    }
+    
   },
 
   reducers: {
@@ -106,7 +198,11 @@ export default {
       
       return { ...state, action_list: action.action_list };
     },
-    
+  
+    newBook(state, action) {
+      return { ...state, book: action.book };
+    },
+  
   },
 
 };

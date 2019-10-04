@@ -42,7 +42,7 @@ class MainFrame extends React.Component {
   
   onClickNew(){
     const {dispatch} = this.props;
-    console.log("xxx", this.state.newUser, ",,", this.state.newMoney);
+    //console.log("xxx", this.state.newUser, ",,", this.state.newMoney);
   
     dispatch({type: "game/newUser",
               newName: this.state.newUser,
@@ -100,7 +100,7 @@ class MainFrame extends React.Component {
             总本金: <b>{book.total}</b>
           </Flex.Item>
           <Flex.Item align="center">
-            余: <b>{book.win}</b>
+            余: <b>{book.balance}</b>
           </Flex.Item>
           <Flex.Item align="center">
             差: <b>{book.loss}</b>

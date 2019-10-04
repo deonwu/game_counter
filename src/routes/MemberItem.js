@@ -16,7 +16,15 @@ if (isIPhone) {
 }
 
 class MemberItem extends React.Component {
-  state = {visibleTotal: false, visibleBalance: false};
+  state = {visibleTotal: false, visibleBalance: false,  newMoney: '100', balance: "100"};
+  
+  onChangeBalance(val){
+    this.setState({balance: val});
+  }
+  
+  onChangeMoney(val){
+    this.setState({newMoney: val});
+  }
   
   onClose(){
     if(this.state.visibleTotal || this.state.visibleBalance) {
@@ -26,6 +34,26 @@ class MemberItem extends React.Component {
   
   showModal(name){
     this.setState({visibleTotal: name === 'Total', visibleBalance: name === 'Balance'});
+  }
+  
+  onUpdateMoney(){
+    const {dispatch} = this.props;
+    
+    dispatch({type: "game/newMoney",
+      newName: this.props.item.name,
+      newMoney: this.state.newMoney,
+      cb: ()=>{this.onClose()}
+    });
+  }
+  
+  onUpdateBalance(){
+    const {dispatch} = this.props;
+    
+    dispatch({type: "game/newBalance",
+      newName: this.props.item.name,
+      newMoney: this.state.balance,
+      cb: ()=>{this.onClose()}
+    });
   }
   
   render () {
@@ -61,14 +89,16 @@ class MemberItem extends React.Component {
             <List.Item>
               <InputItem
                 type={"number"}
-                defaultValue={100}
-                placeholder="start from left"
+                defaultValue={this.state.newMoney}
+                placeholder="增加累计金额"
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                onChange={x=>this.onChangeMoney(x)}
+
               >活动金额</InputItem>
             </List.Item>
             <List.Item>
-              <Button type="primary" onClick={x=>this.onClose('modal2')}>确认</Button>
+              <Button type="primary" onClick={x=>this.onUpdateMoney()}>确认增加</Button>
             </List.Item>
           </List>
         </Modal>
@@ -83,14 +113,15 @@ class MemberItem extends React.Component {
             <List.Item>
               <InputItem
                 type={"number"}
-                defaultValue={100}
-                placeholder="start from left"
+                defaultValue={item.balance}
+                placeholder="全部余额"
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                onChange={x=>this.onChangeBalance(x)}
               >余额</InputItem>
             </List.Item>
             <List.Item>
-              <Button type="primary" onClick={x=>this.onClose('modal2')}>确认</Button>
+              <Button type="primary" onClick={x=>this.onUpdateBalance()}>确认更新余额</Button>
             </List.Item>
           </List>
         </Modal>
