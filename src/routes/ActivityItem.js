@@ -5,13 +5,14 @@ import { connect } from 'dva';
 import { Flex, WhiteSpace } from 'antd-mobile';
 import moment from 'moment';
 import { format } from "./utils";
+import styles from '../index.less';
 
 class ActivityItem extends React.Component {
   render () {
     const item = this.props.item;
     
     return (
-      <div className="flex-container">
+      <div className={styles.actionItem}>
         <Flex justify="center" align="center">
           <Flex.Item align="center">
             {item.name}

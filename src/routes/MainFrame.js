@@ -171,6 +171,9 @@ class MainFrame extends React.Component {
                 placeholder="成员名称"
                 moneyKeyboardAlign="left"
                 onChange={x=>this.onChangeName(x)}
+                ref={el => {if(this.state.visibleNew && el) {
+                  el.focus();
+                }}}
               >成员名称</InputItem>
             </List.Item>
             
