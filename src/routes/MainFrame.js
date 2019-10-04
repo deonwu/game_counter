@@ -8,16 +8,7 @@ import { Button, List, Badge } from 'antd-mobile';
 import MemberItem from "./MemberItem";
 import ActivityItem from "./ActivityItem";
 import { format } from "./utils";
-
 import styles from '../index.less';
-
-const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
-let moneyKeyboardWrapProps;
-if (isIPhone) {
-  moneyKeyboardWrapProps = {
-    onTouchStart: e => e.preventDefault(),
-  };
-}
 
 class MainFrame extends React.Component {
   
@@ -91,9 +82,6 @@ class MainFrame extends React.Component {
       <div className="flex-container">
         
         <div className="sub-title"></div>
-        <Flex justify="center" align="center">
-          <Flex.Item align="center">简单活动记账器</Flex.Item>
-        </Flex>
         <WhiteSpace size="lg" />
   
         <Flex justify="center" align="center">
@@ -182,7 +170,6 @@ class MainFrame extends React.Component {
                 defaultValue={this.state.newUser}
                 placeholder="成员名称"
                 moneyKeyboardAlign="left"
-                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                 onChange={x=>this.onChangeName(x)}
               >成员名称</InputItem>
             </List.Item>
@@ -193,7 +180,6 @@ class MainFrame extends React.Component {
                 defaultValue={defaultMoney}
                 placeholder="初始金额"
                 moneyKeyboardAlign="left"
-                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                 onChange={x=>this.onChangeMoney(x)}
               >活动金额</InputItem>
             </List.Item>
