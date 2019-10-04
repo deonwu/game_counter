@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Route, Switch, Redirect} from "dva/router";
+import {BrowserRouter, Route, Switch} from "dva/router";
 
 import MainFrame from "./routes/MainFrame";
 

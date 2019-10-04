@@ -2,8 +2,8 @@
 import React from "react";
 import { connect } from 'dva';
 
-import { Flex, WhiteSpace, Modal, InputItem } from 'antd-mobile';
-import { Button, List } from 'antd-mobile';
+import { Flex, WhiteSpace, Modal } from 'antd-mobile';
+import { Button } from 'antd-mobile';
 import { format } from "./utils";
 import styles from '../index.less';
 

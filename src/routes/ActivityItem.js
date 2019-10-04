@@ -3,11 +3,8 @@ import React from "react";
 import { connect } from 'dva';
 
 import { Flex, WhiteSpace } from 'antd-mobile';
-import { Button, List } from 'antd-mobile';
 import moment from 'moment';
 import { format } from "./utils";
-
-const Item = List.Item;
 
 class ActivityItem extends React.Component {
   render () {
@@ -28,7 +25,6 @@ class ActivityItem extends React.Component {
         </Flex>
   
         <WhiteSpace size="sm" />
-
       </div>
     )
   }

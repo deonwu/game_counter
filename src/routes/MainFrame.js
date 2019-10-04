@@ -72,7 +72,7 @@ class MainFrame extends React.Component {
           'data-seed': 'logId',
         },
         (buttonIndex) => {
-          if(buttonIndex == 0){
+          if(buttonIndex === 0){
             dispatch({type: "game/clear"});
           }
         });

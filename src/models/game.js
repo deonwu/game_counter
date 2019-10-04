@@ -79,7 +79,7 @@ export default {
           
           return;
         }
-        const im = parseInt(newMoney);
+        const im = parseInt(newMoney, 10);
         if(im <= 0 || im > 10000000){
           Toast.fail("金额只能0~10,000,000");
           
@@ -116,7 +116,7 @@ export default {
         if(updateUser.length <= 0){
           Toast.fail("未知成员名:" + newName);
         }
-        const im = parseInt(newMoney);
+        const im = parseInt(newMoney, 10);
         if(im <= -10000000 || im > 10000000){
           Toast.fail("金额只能0~10,000,000");
         
@@ -158,7 +158,7 @@ export default {
         if(updateUser.length <= 0){
           Toast.fail("未知成员名:" + newName);
         }
-        const im = parseInt(newMoney);
+        const im = parseInt(newMoney, 10);
         if(im <= 0 || im > 10000000){
           Toast.fail("金额只能0~10,000,000");
         
@@ -234,7 +234,7 @@ export default {
     },
   
     newUserMoney(state, action) {
-      if(store("new_user") != action.new_user) {
+      if(store("new_user") !== action.new_user) {
         store("new_user", action.new_user);
       }
   
@@ -242,7 +242,7 @@ export default {
     },
   
     lastTotal(state, action) {
-      if(store("last_total") != action.last_total) {
+      if(store("last_total") !== action.last_total) {
         store("last_total", action.last_total);
       }
       
