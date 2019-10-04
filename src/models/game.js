@@ -105,13 +105,20 @@ export default {
           Toast.fail("未知成员名:" + newName);
         }
         const im = parseInt(newMoney);
-        if(im <= 0 || im > 10000000){
+        if(im <= -10000000 || im > 10000000){
           Toast.fail("金额只能0~10,000,000");
         
           return;
         }
   
         updateUser[0].allMoney = updateUser[0].allMoney + im;
+  
+        if(updateUser[0].allMoney <= 0 || updateUser[0].allMoney > 10000000){
+          Toast.fail("金额只能0~10,000,000");
+    
+          return;
+        }
+  
   
         yield put({type: 'userList', member_list: [...curUser]});
   

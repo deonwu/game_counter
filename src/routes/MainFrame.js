@@ -7,6 +7,8 @@ import { Button, List, Badge } from 'antd-mobile';
 
 import MemberItem from "./MemberItem";
 import ActivityItem from "./ActivityItem";
+import { format } from "./utils";
+
 import '../index.css';
 
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
@@ -98,10 +100,10 @@ class MainFrame extends React.Component {
         <WingBlank>
           <Flex justify="center" align="center">
             <Flex.Item>
-              总本金: <b>{book.total}</b>
+              总本金: <b>{format(book.total)}</b>
             </Flex.Item>
             <Flex.Item>
-              总余额: <b>{book.balance}</b>
+              总余额: <b>{format(book.balance)}</b>
             </Flex.Item>
           </Flex>
     
@@ -109,10 +111,10 @@ class MainFrame extends React.Component {
     
           <Flex justify="center" align="center">
             <Flex.Item >
-              总应收: <b>{book.income}</b>
+              总应收: <b>{format(book.income)}</b>
             </Flex.Item>
             <Flex.Item >
-              总应付: <b>{book.pay}</b>
+              总应付: <b>{format(book.pay)}</b>
             </Flex.Item>
           </Flex>
     
